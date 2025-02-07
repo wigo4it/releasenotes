@@ -7,16 +7,9 @@ const config = {
     logging: process.env.DB_LOGGING === 'true', // Enable logging based on environment
   },
   production: {
-    dialect: process.env.DB_DIALECT || 'mssql', // Default to MSSQL for CosmosDB
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 1433,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    dialect: process.env.DB_DIALECT || 'sqlite', // Use SQLite for production
+    storage: process.env.DB_STORAGE || './db/prod.sqlite3', // Separate storage for production
     logging: process.env.DB_LOGGING === 'true',
-    dialectOptions: {
-      encrypt: true, // Required for CosmosDB connections
-    },
   },
   test: {
     dialect: process.env.DB_DIALECT || 'sqlite',
