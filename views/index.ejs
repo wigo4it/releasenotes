@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Notes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="container-fluid py-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <a href="https://support.wigo4it.nl/support/home" aria-label="Support Wigo4it logo">
+          <img src="./img/Wigo4it_Favicon_rgb.png" alt="Wigo4it-logo" class="me-3">
+        </a>
+        <h1 class="fs-4 m-0">Releasenotes Wigo4it</h1>
+      </div>
+      <nav class="d-flex">
+        <a href="https://support.wigo4it.nl/support/home" class="btn btn-outline-primary me-2" target="_blank">Support</a>
+        <a href="https://support.wigo4it.nl/support/solutions" class="btn btn-outline-primary me-2" target="_blank">Artikelen</a>
+        <a href="https://status.wigo4it.nl" class="btn btn-outline-primary" target="_blank">Status</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container-fluid my-5">
+    <!-- Filter Buttons -->
+    <div class="d-flex justify-content-center mb-4">
+      <a href="/?application=Socrates" class="btn btn-primary <%= application === 'Socrates' ? 'active' : '' %> me-2">Socrates</a>
+      <a href="/?application=ServicesEnIntegratie" class="btn btn-primary <%= application === 'ServicesEnIntegratie' ? 'active' : '' %>">Services & Integratie</a>
+    </div>
+
+    <!-- Application Logo -->
+    <% if (application === 'Socrates') { %>
+      <img src="img/Socrates_logo.png" alt="Socrates" class="d-block mx-auto mb-4 application-logo">
+    <% } else if (application === 'ServicesEnIntegratie') { %>
+      <img src="img/SenI.png" alt="Services & Integratie" class="d-block mx-auto mb-4 application-logo">
+    <% } %>
+
+    <!-- Release Notes -->
+    <section class="container">
+      <!-- Print Button -->
+      <div class="text-end mb-3">
+        <button id="printLink" class="btn btn-link text-decoration-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+            <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1" />
+            <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+          </svg>
+          Print naar PDF
+        </button>
+      </div>
+      <div class="accordion" id="releaseNotesAccordion">
+        <% releases.forEach((release, index) => { %>
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="heading-<%= index %>">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= index %>" aria-expanded="false" aria-controls="collapse-<%= index %>">
+                <%= release.applicatie %> - <%= release.name %>
+              </button>
+            </h3>
+            <div id="collapse-<%= index %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= index %>" data-bs-parent="#releaseNotesAccordion">
+              <div class="accordion-body">
+                <!-- Adaptieve wijzigingen -->
+                <% const adaptieveWijzigingen = release.items.filter(item => item.workItemType === 'Product Backlog Item'); %>
+                <% if (adaptieveWijzigingen.length > 0) { %>
+                  <h4>Adaptieve wijzigingen</h4>
+                  <ul class="list-group mb-3">
+                    <% adaptieveWijzigingen.forEach(item => { %>
+                      <li class="list-group-item">
+                        <h5><%= item.id %> - <%= item.title %></h5>
+                        <% if (item.gemeente || item.areaPath) { %>
+                          <div class="mt-2">
+                            <% if (item.gemeente) { %>
+                              <span class="badge bg-primary me-2"><%- item.gemeente %></span>
+                            <% } %>
+                            <% if (item.areaPath) { %>
+                              <span class="badge bg-secondary"><%- item.areaPath %></span>
+                            <% } %>
+                          </div>
+                        <% } %>
+                        
+                        <p class="mb-1"><%- item.userStory || 'Geen user story beschikbaar' %></p>
+                        <% if (item.acceptatiecriteria) { %>
+                          <h6>Acceptatiecriteria</h6>
+                          <p class="mb-1"><%- item.acceptatiecriteria %></p>
+                        <% } %>
+                        <% if (item.stuurdatawijzigingen) { %>
+                          <h6>Stuurdatawijzigingen</h6>
+                          <p class="mb-1"><%- item.stuurdatawijzigingen %></p>
+                        <% } %>
+                        <% if (item.batchwijzigingen) { %>
+                          <h6>Batchwijzigingen</h6>
+                          <p class="mb-1"><%- item.batchwijzigingen %></p>
+                        <% } %>
+                        <% if (item.aandachtspunten) { %>
+                          <h6>Aandachtspunten</h6>
+                          <p class="mb-1"><%- item.aandachtspunten %></p>
+                        <% } %>
+                        <% if (item.relations.length > 0) { %>
+                          <h6>Gerelateerde items</h6>
+                          <ul>
+                            <% item.relations.forEach(relation => { %>
+                              <li><a href="https://support.wigo4it.nl/support/tickets/<%= relation.id %>" target="_blank"><%= relation.title %></a></li>
+                            <% }) %>
+                          </ul>
+                        <% } %>
+                      </li>
+                    <% }) %>
+                  </ul>
+
+                <!-- Correctieve Wijzigingen -->
+                <h5>Correctieve wijzigingen</h5>
+                <ul class="list-group mb-3">
+                  <% release.items
+                    .filter(item => item.workItemType === 'Bug')
+                    .forEach(item => { %>
+                      <li class="list-group-item">
+                        <strong><%= item.id %> - <%= item.title %></strong>
+                        <p class="mb-1"><%- item.userStory || 'No user story available' %></p>
+                        <% if (item.areaPath) { %>
+                          <p class="mb-1"><strong>AreaPath:</strong> <%- item.areaPath %></p>
+                        <% } %>
+                        <% if (item.gemeente) { %>
+                          <p class="mb-1"><strong>Gemeente:</strong> <%- item.gemeente %></p>
+                        <% } %>
+                        <% if (item.acceptatiecriteria) { %>
+                          <h6>Acceptatiecriteria</h6>
+                          <p class="mb-1"><%- item.acceptatiecriteria %></p>
+                        <% } %>
+                        <% if (item.stuurdatawijzigingen) { %>
+                          <h6>Stuurdatawijzigingen</h6>
+                          <p class="mb-1"><%- item.stuurdatawijzigingen %></p>
+                        <% } %>
+                        <% if (item.batchwijzigingen) { %>
+                          <h6>Batchwijzigingen</h6>
+                          <p class="mb-1"><%- item.batchwijzigingen %></p>
+                        <% } %>
+                        <% if (item.aandachtspunten) { %>
+                          <h6>Aandachtspunten</h6>
+                          <p class="mb-1"><%- item.aandachtspunten %></p>
+                        <% } %>
+                        <% if (item.relations.length > 0) { %>
+                          <h6>Gerelateerde items</h6>
+                          <ul>
+                            <% item.relations.forEach(relation => { %>
+                              <li><a href="https://support.wigo4it.nl/support/tickets/<%= relation.id %>" target="_blank"><%= relation.title %></a></li>
+                            <% }) %>
+                          </ul>
+                        <% } %>
+                      </li>
+                  <% }) %>
+                </ul>
+    
+                <!-- Service Packs -->
+                <h5>Service Packs</h5>
+                <ul class="list-group mb-3">
+                  <% release.items
+                    .filter(item => item.servicepack)
+                    .forEach(item => { %>
+                      <li class="list-group-item">
+                        <strong><%= item.id %> - <%= item.title %></strong>
+                      </li>
+                    <% }) %>
+                </ul>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <% if (!showAll) { %> 
+        <div class="text-center mt-3">
+          <a class="btn btn-link" href="?application=<%= application %>&show=all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+            </svg>
+            Toon alle releasenotes
+        </a> 
+      </div>
+      <% } %>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    let originalAccordion;
+
+    function prepareForPrint() {
+      // Add a print date to the document
+      const body = document.querySelector("body");
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString("nl-NL", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+
+      body.setAttribute("data-print-date", formattedDate);
+
+      // Get the expanded accordion item
+      const expandedItem = document.querySelector(".accordion-collapse.show");
+
+      if (!expandedItem) {
+        alert("Je hebt nog geen releasenotes geselecteerd om te printen.");
+        return;
+      }
+
+      // Save original DOM if not already saved
+      if (!originalAccordion) {
+        originalAccordion = document.getElementById("releaseNotesAccordion").cloneNode(true);
+      }
+
+      // Remove all non-expanded accordion items
+      const accordionItems = document.querySelectorAll(".accordion-item");
+      accordionItems.forEach((item) => {
+        const collapse = item.querySelector(".accordion-collapse");
+        if (!collapse.classList.contains("show")) {
+          item.remove();
+        }
+      });
+    }
+
+    // Add event listener to restore the DOM after printing
+    window.addEventListener("afterprint", function () {
+      const accordionContainer = document.getElementById("releaseNotesAccordion");
+      accordionContainer.replaceWith(originalAccordion.cloneNode(true));
+    });
+
+    // Trigger print logic on button click
+    document.getElementById("printLink").addEventListener("click", function () {
+      prepareForPrint();
+      window.print();
+    });
+
+    // Trigger print logic on Ctrl+P or Cmd+P
+    window.addEventListener("beforeprint", prepareForPrint);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+main {
+    min-height: calc(100vh - 56px);
+    background: url(/img/Frame.png) no-repeat top left;
+    font-family: 'Raleway bold', sans-serif;
+}
+
+/* Header Styles */
+header {
+    background-color: white;
+    min-height: 64px;
+    padding: 8px 0; /* Use padding for spacing instead of a specific height */
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem; /* Adjust to match Bootstrap typography scale */
+    font-weight: 700;
+    margin: 0;
+}
+
+header img {
+    max-height: 40px;
+}
+
+.btn-outline-primary {
+    font-size: 0.875rem; /* Matches Bootstrap small button */
+    font-weight: 700;
+    border-radius: 0.25rem;
+    color: #404d91;
+}
+
+.btn-outline-primary:hover {
+    background-color: #404d91; /* Matches your hover color */
+    color: white;
+}
+
+.application-logo {
+    display: block;
+    margin: 10px auto;
+    max-width: auto;
+    height: 200px;
+}
+
+/* Print Link Styles */
+#printLink {
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #404d91;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    /* cursor: pointer; */
+}
+
+.btn-primary.active {
+    background-color: #332945;
+}
+
+h6 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+a.btn-link {
+    text-decoration:none;
+}

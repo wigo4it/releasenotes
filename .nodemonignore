@@ -1,0 +1,24 @@
+# Ignore node_modules directory
+node_modules
+
+# Ignore database files
+db/*.sqlite
+
+# Ignore log files
+logs/*
+
+# Ignore environment files
+.env
+
+# Ignore compiled assets
+public/js/*.min.js
+public/css/*.min.css
+
+# Ignore tests and coverage reports
+tests/
+coverage/
+
+# Ignore other unnecessary files
+.DS_Store
+Thumbs.db
+*.log
