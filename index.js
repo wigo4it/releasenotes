@@ -9,7 +9,7 @@ const { transformHtml, urlify } = require('./utils/sanitizeHtml'); // Correct im
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
