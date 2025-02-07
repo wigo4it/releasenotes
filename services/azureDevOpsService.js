@@ -88,7 +88,7 @@ const fetchBacklogItems = async () => {
     const wiqlUrl = `${AZURE_API_URL}/${AZURE_ORG}/${AZURE_PROJECT}/_apis/wit/wiql?api-version=7.0`;
 
     const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 620);
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     const formattedDate = thirtyDaysAgo.toISOString().split('T')[0];
 
     const query = generateWiqlQuery(formattedDate);
