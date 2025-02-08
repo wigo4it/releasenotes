@@ -8,8 +8,8 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    dialect: process.env.NODE_ENV === 'production' ? 'mssql' : 'sqlite',
-    storage: process.env.NODE_ENV === 'production' ? undefined : './dev.sqlite',
+    dialect: process.env.NODE_ENV === 'sqlite',
+    storage: process.env.NODE_ENV === './db/dev.sqlite',
   }
 );
 
