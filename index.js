@@ -34,25 +34,22 @@ const initializeApp = async () => {
   try {
     console.log('Starting application initialization...');
 
-    // Sync database
+    console.log(`Attempting to start on PORT: ${PORT}`);
+
     console.log('Synchronizing database...');
     // await sequelize.sync({ force: true });
     console.log('Database synchronized successfully.');
 
-    // Sync items
     console.log('Fetching backlog items from Azure DevOps...');
     // await fetchBacklogItems();
 
-    // Start the server
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`✅ Server is running on http://0.0.0.0:${PORT}`);
     });
 
     console.log('Application initialized successfully.');
   } catch (error) {
-    console.error('Failed to initialize the application:', error);
-
-    // Gracefully shut down the app if initialization fails
+    console.error('❌ Failed to initialize the application:', error);
     process.exit(1); // Exit with an error code
   }
 };
